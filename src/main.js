@@ -10,9 +10,6 @@ import SimpleLightbox from "simplelightbox";
 // Додатковий імпорт стилів
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-const lightbox = new SimpleLightbox(".gallery a", {
-  /* options */
-});
 // ? import HTTP-запити
 import * as pixabayapi from "./js/pixabay-api";
 //  ? import Галерея і картки зображень
@@ -37,7 +34,8 @@ function handlerSubmit(event) {
   if (!normalizedInputValue) {
     return;
   }
-
+  const preloader = renderfunctions.createPreLoader();
+  refsEl.list.insertAdjacentHTML("afterbegin", preloader);
   //? HTTP-запити
 
   pixabayapi
@@ -51,11 +49,18 @@ function handlerSubmit(event) {
             "Sorry, there are no images matching your search query. Please try again!",
         });
       }
-      //  ?  Галерея і картки зображень
+
+      //?  Галерея і картки зображень
       const markup = renderfunctions.createListMarkup(data.hits);
       refsEl.list.innerHTML = markup;
     })
     .catch(error => {
       console.log(error);
+    })
+    .finally(() => {
+      thisCurrentTarget.reset();
+      var lightbox = new SimpleLightbox(".js-list a", {
+        /* options */
+      });
     });
 }

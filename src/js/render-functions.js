@@ -9,7 +9,7 @@ export function createItemMarkup(data) {
     comments,
     downloads,
   } = data;
-  return `<li class="gallery">
+  return `<li class="list__card">
             <a href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}"></a>
             <ul>
               <li>
@@ -34,4 +34,10 @@ export function createItemMarkup(data) {
 
 export function createListMarkup(arr) {
   return arr.map(createItemMarkup).join("");
+}
+
+export function createPreLoader() {
+  return `<li class='pre-loader'>
+    <div class='loader'></div>
+  </li>`;
 }
