@@ -5,6 +5,19 @@ import iziToast from "izitoast";
 // Додатковий імпорт стилів
 import "izitoast/dist/css/iziToast.min.css";
 
+// Описаний у документації
+import SimpleLightbox from "simplelightbox";
+// Додатковий імпорт стилів
+import "simplelightbox/dist/simple-lightbox.min.css";
+
+const lightbox = new SimpleLightbox(".gallery a", {
+  /* options */
+});
+// ? import HTTP-запити
+import * as pixabayapi from "./js/pixabay-api";
+//  ? import Галерея і картки зображень
+import * as renderfunctions from "./js/render-functions";
+
 const refsEl = {
   form: document.querySelector(".js-form"),
   list: document.querySelector(".js-list"),
@@ -27,9 +40,9 @@ function handlerSubmit(event) {
 
   //? HTTP-запити
 
-  createFetchRequest(normalizedInputValue)
+  pixabayapi
+    .createFetchRequest(normalizedInputValue)
     .then(data => {
-      console.log(data.hits);
       if (!data.hits.length) {
         iziToast.error({
           title: "Caution",
@@ -38,40 +51,11 @@ function handlerSubmit(event) {
             "Sorry, there are no images matching your search query. Please try again!",
         });
       }
+      //  ?  Галерея і картки зображень
+      const markup = renderfunctions.createListMarkup(data.hits);
+      refsEl.list.innerHTML = markup;
     })
     .catch(error => {
       console.log(error);
     });
-}
-
-const API_KEY = "44734756-d98c11aebccc1bae684f0851d";
-
-function createFetchRequest(userRequest) {
-  const BASE_URL = "https://pixabay.com";
-  const END_POINT = "/api/";
-  const options = new URLSearchParams({
-    key: API_KEY,
-    q: userRequest,
-    image_type: "photo",
-    orientation: "horizontal",
-    safesearch: true,
-  });
-
-  const URL = `${BASE_URL}${END_POINT}?${options}`;
-
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  };
-
-  return fetch(URL, { options, requestOptions }).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return response.json();
-  });
 }
