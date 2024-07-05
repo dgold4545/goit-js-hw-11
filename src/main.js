@@ -1,18 +1,19 @@
 const refs = {
-  form: document.querySelector('.js-form'),
-  button: document.querySelector('.sub-btn'),
+  form: document.querySelector(".js-form"),
+  list: document.querySelector(".js-list"),
 };
+// Форма пошуку міститься в HTML-документі. Користувач буде вводити рядок для пошуку в текстове поле, а за сабмітом форми необхідно виконувати HTTP-запит із цим пошуковим рядком.
 
-refs.form.addEventListener('submit', handlerFormSubmit);
+refs.form.addEventListener("submit", handlerSubmit);
 
-function handlerFormSubmit(event) {
+function handlerSubmit(event) {
   event.preventDefault();
-  const inputValue = event.target.elements.query.value.trim();
 
-  if (!inputValue) {
+  const thisForm = event.currentTarget;
+  const inputValue = thisForm.elements.query.value;
+  const normalizeInputValue = inputValue.trim().toLowerCase();
+
+  if (!normalizeInputValue) {
     return;
   }
-
-  console.log(inputValue);
 }
-// При натисканні на кнопку відправки форми, додайте перевірку вмісту текстового поля на наявність порожнього рядка, щоб користувач не міг відправити запит, якщо поле пошуку порожнє.

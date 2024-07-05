@@ -23,3 +23,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+.js-form {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
