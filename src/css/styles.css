@@ -24,7 +24,13 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.container {
+  max-width: 1128px;
+  margin: 0 auto;
+}
+
 .pre-loader {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -187,7 +193,7 @@ ul {
 
 .list__card {
   border: 1px solid #808080;
-  max-width: 360px;
+  width: 360px;
   height: 200px;
 }
 
