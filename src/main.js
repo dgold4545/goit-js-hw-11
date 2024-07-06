@@ -15,6 +15,12 @@ import * as pixabayapi from "./js/pixabay-api";
 //  ? import Галерея і картки зображень
 import * as renderfunctions from "./js/render-functions";
 
+const lightbox = new SimpleLightbox(".js-list a", {
+  captions: true,
+  captionsData: "alt",
+  captionDelay: 350,
+});
+
 const refsEl = {
   form: document.querySelector(".js-form"),
   list: document.querySelector(".js-list"),
@@ -64,12 +70,6 @@ function handlerSubmit(event) {
     })
     .finally(() => {
       thisCurrentTarget.reset();
-
-      const lightbox = new SimpleLightbox(".js-list a", {
-        captions: true,
-        captionsData: "alt",
-        captionDelay: 350,
-      });
 
       lightbox.refresh();
     });
