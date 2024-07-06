@@ -43,8 +43,13 @@ function handlerSubmit(event) {
     .then(data => {
       if (!data.hits.length) {
         iziToast.error({
-          title: "Caution",
+          // title: "Caution",
+          theme: "dark",
           position: "topRight",
+          messageColor: "#fff",
+          titleColor: "#fff",
+          backgroundColor: "#EF4040",
+          maxWidth: "330px",
           message:
             "Sorry, there are no images matching your search query. Please try again!",
         });
@@ -59,8 +64,13 @@ function handlerSubmit(event) {
     })
     .finally(() => {
       thisCurrentTarget.reset();
-      var lightbox = new SimpleLightbox(".js-list a", {
-        /* options */
+
+      const lightbox = new SimpleLightbox(".js-list a", {
+        captions: true,
+        captionsData: "alt",
+        captionDelay: 350,
       });
+
+      lightbox.refresh();
     });
 }
